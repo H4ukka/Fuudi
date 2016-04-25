@@ -1,0 +1,33 @@
+<template name="foods">
+	  {{> nav}}
+	  <div class="site-wrap">
+	    {{> header}}
+	    <button class="fab" name="fab">+</button>
+	    <div id="foods-container">
+	      {{> fooditem}}
+	    </div>
+	    {{> footer}}
+	  </div>
+</template>
+
+<template name="fooditem">
+	{{#each fooditem}}
+	<div class="food-item no-preview-image">
+		<a href="#">
+			<img src="{{getImageFromId this.image_id}}" onerror="this.src='/svg/food-icons/cutlery-1.svg'" class="preview-img">
+			<h2>{{this.name}}</h2>
+			<div class="food-info">
+				<p>Enegiaa: <span>{{calories this.energia}} kcal</span></p>
+				<p>Hiilihydraatit: <span>{{this.hiilihydraatti}} g</span></p>
+				<p>Sokeria: <span>{{this.sokerit}} g</span></p>
+				<p>Rasvaa: <span>{{this.rasva}} g</span></p>
+				<p>Suolaa: <span>{{this.suola}} mg</span></p>
+				<p>Proteiinia: <span>{{this.proteiini}} g</span></p>
+				<p>Kuitua: <span>{{this.kuitu}} g</span></p>
+				<p class="quantifier">per 100g</p>
+				<div class="arrow-down"></div>
+			</div>
+		</a>
+	</div>
+	{{/each}}
+</template>

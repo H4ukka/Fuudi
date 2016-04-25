@@ -1,0 +1,42 @@
+<template name="addfood">
+    {{> nav}}
+    <div class="site-wrap">
+      {{> header}}
+      <div class="foodform-wrap">
+      	{{> foodform}}
+      </div>
+      {{> footer}}
+    </div>
+</template>
+
+<template name="foodform">
+	<div class="foodform">
+		<form class="food-form-body">
+			<input class="title" type="text" name="name" placeholder="nimi" required/>
+			<input type="number" name="energy" placeholder="energiaa" />
+			<input type="number" name="carbs" placeholder="hiilihydraatit" />
+			<input type="number" name="sugar" placeholder="sokeria" />
+			<input type="number" name="fat" placeholder="rasvaa" />
+			<input type="number" name="salt" placeholder="suolaa" />
+			<input type="number" name="prot" placeholder="proteiinia" />
+			<input type="number" name="fiber" placeholder="kuitua" />
+			<select name="category">
+				<option value="none">valitse kategoria</option>
+				{{#with distinct_categories}}
+		    	{{#if ready}}
+				    {{#each categories}}
+				    	{{> category_option}}
+				    {{/each}}
+			    {{/if}}
+				{{/with}}
+			</select>
+			<input type="file" name="image" id="file" class="myFileInput" accept="image/*">
+			<label for="file"><span>lataa kuva</span></label>
+			<input class="submit" type="submit" value="Lisää" />
+		</form>
+	</div>
+</template>
+
+<template name="category_option">
+	<option value="{{this}}">{{this}}</option>
+</template>

@@ -1,5 +1,6 @@
 .meteor/local
 .meteor/meteorite
+server/social_config.js
 
 # =========================
 # Operating System Files

@@ -1,0 +1,19 @@
+<template name="allimages">
+	  {{> nav}}
+	  <div class="site-wrap">
+	    {{> header}}
+	    <div id="foods-container">
+	      {{> imageView}}
+	    </div>
+	  </div>
+</template>
+
+<template name="imageView">
+  <div class="imageView">
+    {{#each images}}
+      <div>
+        <a href="{{this.url}}" target="_blank"><img src="{{this.url}}" alt="" class="thumbnail" /></a>
+      </div>
+    {{/each}}
+  </div>
+</template>

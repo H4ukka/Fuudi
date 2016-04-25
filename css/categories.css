@@ -1,0 +1,26 @@
+#categories-container {
+	text-align: center;
+	padding: 120px 60px;
+	width: 70%;
+	margin: 0 auto;
+}
+.category {
+	display: inline-block;
+	width: 180px;
+	padding: 0 0 20px 0;
+	margin: 8px; 
+	background: #fefefe;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	border-radius: 2px;
+	position: relative;
+}
+.category .svg-preview-img {
+	width: 50%;
+	padding: 32px;
+}
+.category h2 {
+	text-transform: capitalize;
+	font-weight: 300;
+	font-size: 0.9em;
+	color: #555;
+}

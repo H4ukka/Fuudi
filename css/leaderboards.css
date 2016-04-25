@@ -1,0 +1,68 @@
+#leaderboards {
+	text-align: center;
+}
+#topuser,
+#topweek,
+#topmonth {
+	width: 20%;
+	display: inline-block;
+	background: #fefefe;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	border-radius: 2px;
+	text-align: left;
+	padding: 0 22px;
+	vertical-align: top;
+	border-radius: 2px;
+	margin: 12px;
+}
+#topuser h2,
+#topweek h2,
+#topmonth h2 {
+	text-align: center;
+	margin: 32px 0;
+	font-size: 1.3em;
+	font-weight: 300;
+}
+
+#topuser article,
+#topmonth article,
+#topweek article {
+	padding: 22px 0;
+	border-bottom: 1px solid #ddd;
+}
+#topuser article:last-child,
+#topweek article:last-child {
+	border-bottom: none;
+}
+#topuser img {
+	height: 50px;
+	width: 50px;
+	border-radius: 25px;
+}
+#topuser h3 {
+	text-transform: capitalize;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 50px;
+	margin-left: 12px; 
+}
+#topweek .item > h3,
+#topmonth .item > h3 {
+	display: inline-block;
+}
+#topweek .item > p,
+#topmonth .item > p {
+	font-size: 0.8em;
+	display: inline-block;
+	color: #888;
+}
+#topweek .item .creator,
+#topmonth .item .creator {
+	text-transform: capitalize;
+}
+#topweek .likes,
+#topmonth .likes {
+	float: right;
+	color: #1BD965;
+	padding: 8px 0;
+}

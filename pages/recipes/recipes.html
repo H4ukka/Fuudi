@@ -1,0 +1,46 @@
+<template name="recipes">
+    {{> nav}}
+    <div class="site-wrap">
+      {{> header}}
+      <button class="fab" name="fab">+</button>
+      <div id="recipes-container">
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+        {{> recipe}}
+      </div>
+    </div>
+</template>
+
+<template name="recipe">
+  <div class="recipe">
+    <a href="#">
+      <img src="/cover-img/a.jpg" class="preview-img">
+      <h2>Esimerkki Resepti</h2>
+      <div class="rating">
+        <img src="/svg/full-star.svg" alt="Full star" class="rating-star">
+        <img src="/svg/full-star.svg" alt="Full star" class="rating-star">
+        <img src="/svg/full-star.svg" alt="Full star" class="rating-star">
+        <img src="/svg/full-star.svg" alt="Full star" class="rating-star">
+        <img src="/svg/half-star.svg" alt="Full star" class="rating-star">
+        <span class="raters">142</span>
+      </div>
+      <p class="short-description">Ei niin hirveän maukas kokonaisuus.</p>
+    </a>
+    <a href="#">
+      <div class="creator-profile">
+        <img src="/img/user-avatar.png" class="small-avatar avatar">
+        <p class="creator-name">A. Smith</p>
+        <p class="creator-stats">Tekijän tietoja.</p>
+      </div>
+    </a>
+  </div>
+</template>

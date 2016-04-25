@@ -1,0 +1,53 @@
+<template name="nav">
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger"></label>
+  <ul class="navigation">
+    <li class="nav-item"><a href="/">Etusivu</a></li>
+    <li class="nav-item"><a href="/categories">Kategoriat</a></li>
+    <li class="nav-item"><a href="/recipes">Reseptit</a></li>
+  </ul>
+</template>
+
+<template name="header">
+  <header id="header" class="smaller">
+    <div id="logo">
+      <h1>fuudi</h1>
+    </div>
+    <button class="searchtoggle" name="searchtoggle">🔍</button>
+    <div id="search-wrap">
+      {{> foodsearch}}
+    </div>
+    <div class="login">
+      {{> loginButtons}}
+    </div>
+  </header>
+</template>
+
+<template name="foodsearch">
+  <!-- <span class="icon"><i class="fa fa-search"></i></span> -->
+  {{> EasySearch.Input index=playersIndex attributes=inputAttributes}}
+
+  {{#EasySearch.IfInputEmpty index=playersIndex}}
+  {{else}}
+    <ul>
+      {{#EasySearch.Each index=playersIndex}}
+        <li><a href="/food/{{name}}" class="fooditem-link">{{name}}</a></li>
+      {{/EasySearch.Each}}
+    </ul>
+    {{#EasySearch.IfNoResults index=playersIndex}}
+      <div class="no-results">Ei tuloksia.</div>
+    {{/EasySearch.IfNoResults}}
+    
+  {{/EasySearch.IfInputEmpty}}
+
+</template>
+
+<template name="login">
+    {{#if currentUser}}
+        {{currentUser.services.facebook.name}} -
+        {{currentUser.services.facebook.gender}}
+        <button id="logout">Logout</button>
+    {{else}}
+        <button id="facebook-login" class="btn btn-default"> Login with Facebook</button>
+    {{/if}}
+</template>

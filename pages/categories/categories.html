@@ -1,0 +1,26 @@
+<template name="categories">
+	{{> nav}}
+	<div class="site-wrap">
+		{{> header}}
+		<button class="fab" name="fab">+</button>
+		<div id="categories-container">
+		    {{#with distinct_categories}}
+		    	{{#if ready}}
+				    {{#each categories}}
+				    	{{> category}}
+				    {{/each}}
+			    {{/if}}
+			{{/with}}
+		</div>
+		{{> footer}}
+	</div>
+</template>
+
+<template name="category">
+	<a href="/categories/{{this}}">
+		<div class="category">
+			<img src="/svg/category-icons/{{this}}.svg" onerror="this.src='/svg/food-icons/cutlery-1.svg'" class="svg-preview-img">
+			<h2>{{this}}</h2>
+		</div>
+	</a>
+</template>
