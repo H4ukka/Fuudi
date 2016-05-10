@@ -1,0 +1,61 @@
+<template name="editfood">
+    {{> nav}}
+    <div class="site-wrap">
+        {{> header}}
+        <div class="foodform-wrap">
+            {{> editform}}
+        </div>
+        {{> footer}}
+    </div>
+</template>
+
+<template name="editform">
+    <div class="editform">
+      {{#with formData}}
+        <form class="food-edit-body">
+            <label>Valmistaja: </label>
+            <input class="title" type="text" name="manufacturer" value={{this.valmistaja}} />
+            <br><label>Viivakoodi: </label>
+            <input type="number" name="barcode" placeholder="viivakoodi" value={{this.viivakoodi}} />
+            <br><label>Nimi: </label>
+            <input type="text" name="name" placeholder="nimi" value={{this.name}} required />
+            <br><label>Energia (kcal): </label>
+            <input type="number" name="energy" placeholder="energiaa (kJ)" value={{this.energia}} />
+            <br><label>Hiilihydraatit (g): </label>
+            <input type="number" name="carbs" placeholder="hiilihydraatit" value={{this.hiilihydraatti}} />
+            <br><label>Sokerit (g): </label>
+            <input type="number" name="sugar" placeholder="sokeria" value={{this.sokerit}} />
+            <br><label>Rasva (g): </label>
+            <input type="number" name="fat" placeholder="rasvaa" value={{this.rasva}} />
+            <br><label>Suola (mg): </label>
+            <input type="number" name="salt" placeholder="suolaa" value={{this.suola}} />
+            <br><label>Proteiini (g): </label>
+            <input type="number" name="prot" placeholder="proteiinia" value={{this.proteiini}} />
+            <br><label>Kuitu (g): </label>
+            <input type="number" name="fiber" placeholder="kuitua" value={{this.kuitu}} />
+            <select name="category">
+                {{storeCat this.kategoria}}
+                {{storeImageId this.image_id}}
+                <option value={{this.kategoria}}></option>
+                {{#with distinct_categories}}
+                    {{#if ready}}
+                        {{#each categories}}
+                            {{> cat_option}}
+                        {{/each}}
+                    {{/if}}
+                {{/with}}
+            </select>
+
+            <input type="file" name="image" id="file" class="myFileInput2" accept="image/*">
+            <label for="file"><span>lataa kuva</span></label>
+            <input class="submit" type="submit" value="Talleta" />
+
+        </form>
+      {{/with}}
+    </div>
+</template>
+
+<template name="cat_option">
+<!--    <option value="{{this}}">{{this}}</option>  -->
+    <option value={{this}} {{selectedHelper this}} >{{this}}</option>
+</template>
