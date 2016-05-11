@@ -5,16 +5,19 @@ if (Meteor.isClient) {
 			Router.go('/foods/add')
 	    },
 	    'dblclick .food-item': function (event) {
-	        //console.log("T foods: dblclick"); console.log(this.name);
 	        Session.set('theDoc', this);
 	        Router.go('/foods/edit')
 	    },
 	});
 
 	Template.food.events({
-		'click .fab': function(event) {
+	    'click .fab': function (event) {
 			Router.go('/foods/add')
-		},
+	    },
+	    'dblclick .food-item': function (event) {
+	        //theDoc is set in 'store_doc_id' -helper
+	        Router.go('/foods/edit')
+	    },
 	});
 
 	Template.categories.events({
