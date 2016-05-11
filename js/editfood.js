@@ -8,7 +8,7 @@ if (Meteor.isClient) {
 
             var file_id = 0;
 
-            console.log("editform submit");
+            //console.log("editform submit");
             // Get values from form element
             const target = event.target;
             const Name = target.name.value;
@@ -22,10 +22,17 @@ if (Meteor.isClient) {
             const category = target.category.value;
             const manufacturer = target.manufacturer.value;
             const barcode = target.barcode.value;
+            var removeImage = Session.get('fileRemoveCB'); // true / false
+            var theDoc = Session.get('theDoc');
 
             if (target.image.files[0] === undefined) {
-                file_id = Session.get('itemImageId'); // retain image if new one not given
-                console.log("no image, file_id: "); console.log(file_id);
+                if(removeImage === false) {
+                    file_id = theDoc.image_id; // retain image if new one not given & remove checkbox unchecked
+                }
+                else if (removeImage === true) {
+                    Images.remove(theDoc.image_id);  // file_id default value is 0
+                }
+                //console.log("no image, file_id: "); console.log(file_id);
                 Meteor.call('fuuditest.update', Name, energy, carbs,
                         sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                 }
@@ -35,10 +42,13 @@ if (Meteor.isClient) {
                         // handle error
                         console.log(err);
                     } else {
-                        // handle success depending what you need to do
                         file_id = fileObj._id;
                         Meteor.call('fuuditest.update', Name, energy, carbs,
                                     sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
+                        console.log("theDoc.image_id"); console.log(theDoc.image_id);
+                        if(theDoc.image_id !== undefined && theDoc.image_id !== 0) {
+                            Images.remove(theDoc.image_id);  // remove old image
+                        }
                     }
                 });
             }
@@ -58,6 +68,12 @@ if (Meteor.isClient) {
             }
 
         },
+        'change [type=checkbox]': function(){
+            var remImbCBval = Session.get('fileRemoveCB');
+            if(remImbCBval == false) remImbCBval = true;
+            else remImbCBval = false;
+            Session.set('fileRemoveCB', remImbCBval)
+        },
     });
 /*----------------------------------------------------------------------------------------------------*/
     Template.editform.onRendered(function () {
@@ -67,7 +83,8 @@ if (Meteor.isClient) {
                 name: 'Required'
             }
         });
-//        console.log("editform.onrendered");
+        Session.set('fileRemoveCB', false); // file remove checkbox
+
         var inputs = document.querySelectorAll('.myFileInput2');
         Array.prototype.forEach.call(inputs, function (input) {
             var label = input.nextElementSibling,
@@ -110,25 +127,35 @@ if (Meteor.isClient) {
         ready: ready
     };
 },
+
 });
 /*----------------------------------------------------------------------------------------------------*/
 Template.registerHelper('storeCat', function(category) {
     Session.set('itemCategory', category);
 //    console.log('storeCat');
 });
-Template.registerHelper('storeImageId', function(imageId) {
-    Session.set('itemImageId', imageId);
-    console.log('storeImageId');
-});
-Template.registerHelper('selectedHelper', function(choice) {
+Template.registerHelper('selectedHelper', function(choice) {  // choice.kategoria ???
     var storedCat = Session.get('itemCategory');
     if(storedCat === choice) {
-//        console.log("selected:");
-//        console.log(choice);
         return 'selected';
     }
     else return '';
 });
-    
+Template.registerHelper('image_name', function() { // 
+    var docFileName = 'lataa kuva';
+    var docImgName = Session.get('docFileName');
+    if (docImgName !== undefined && docImgName !== '') {
+        docFileName = docImgName;
+    }
+    return docFileName;
+});   
+Template.registerHelper('remove_image_checkbox', function() { // generate code if necessary
+    var result=false;
+    var docImgName = Session.get('docFileName');
+    if (docImgName !== undefined && docImgName !== '') {
+        result = true;
+    }
+    return result;
+});
 /*----------------------------------------------------------------------------------------------------*/
 } /* Meteor.isClient */
