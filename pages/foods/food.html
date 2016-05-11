@@ -20,6 +20,7 @@
 
 <template name="afoodinfo">
     <div class="food-info">
+        {{store_doc_id fooditem._id}}
         <p>Valmistaja: <span id="valmistaja">{{fooditem.valmistaja}}</span></p>
         <p>Energiaa: <span>{{fooditem.energia}} kcal</span></p>
         <p>Hiilihydraatit: <span>{{fooditem.hiilihydraatti}} g</span></p>
