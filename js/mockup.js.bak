@@ -36,55 +36,33 @@ Meteor.methods({
     	if (! Meteor.userId()) {
     	    throw new Meteor.Error('not-authorized');
     	}
-        Foods.insert({
-            name: Name,
-            kategoria: category,
-            energia: energy,
-            hiilihydraatti: carbs,
-            sokerit: sugar,
-            rasva: fat,
-            suola: salt,
-            proteiini: prot,
-            kuitu: fiber,
-            valmistaja: manufacturer,
-            viivakoodi: barcode,
-            createdAt: new Date(),
-            owner: Meteor.userId(),
-            username: Meteor.user().username,
-            image_id: file_id
-    });
 
+// if array exists there's already food item with the same barcode (and there should be only one...).
+/*    	if (barcodeMatch === false && nameAndM_match === false)*/ {
+    Foods.insert({
+        name: Name,
+        kategoria: category,
+        energia: energy,
+        hiilihydraatti: carbs,
+        sokerit: sugar,
+        rasva: fat,
+        suola: salt,
+        proteiini: prot,
+        kuitu: fiber,
+        valmistaja: manufacturer,
+        viivakoodi: barcode,
+        createdAt: new Date(),
+        owner: Meteor.userId(),
+        username: Meteor.user().username,
+        image_id: file_id
+    });
+}
 },
 'visitors.insert'(user_agent) {
     Visitors.insert({
         agent: user_agent
     });
 },
-  'fuuditest.update'(Name, energy, carbs,
-		sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode) { 
-	    console.log("fuuditest.update");
-//	    console.log(manufacturer); console.log(barcode);
-//	     console.log(energy); console.log(carbs); console.log(sugar);
-//	    console.log(fat); console.log(salt); console.log(prot); console.log(fiber);
-//	    console.log(category); 
-	    Foods.update( {name: Name, kategoria: category}, { $set: {
-	        name: Name,
-	        kategoria: category,
-	        energia: energy,
-	        hiilihydraatti: carbs,
-	        sokerit: sugar,
-	        rasva: fat,
-	        suola: salt,
-	        proteiini: prot,
-	        kuitu: fiber,
-	        valmistaja: manufacturer,
-	        viivakoodi: barcode,
-	        createdAt: new Date(),
-	        owner: Meteor.userId(),
-	        username: Meteor.user().username,
-	        image_id: file_id
-	    }});
-  },
 });
 
 if (Meteor.isClient) {
@@ -402,10 +380,6 @@ if (Meteor.isServer) {
         },
         update: function (userId) {
             // can only change your own documents
-            return (userId);
-        },
-        remove: function (userId) {
-            // can only delete your own documents
             return (userId);
         },
         download: function() { return true; }  // everybody can see images, logged in or not
