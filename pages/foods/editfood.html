@@ -13,29 +13,18 @@
     <div class="editform">
       {{#with formData}}
         <form class="food-edit-body">
-            <label>Valmistaja: </label>
-            <input class="title" type="text" name="manufacturer" value={{this.valmistaja}} />
-            <br><label>Viivakoodi: </label>
-            <input type="number" name="barcode" placeholder="viivakoodi" value={{this.viivakoodi}} />
-            <br><label>Nimi: </label>
-            <input type="text" name="name" placeholder="nimi" value={{this.name}} required />
-            <br><label>Energia (kcal): </label>
-            <input type="number" name="energy" placeholder="energiaa (kJ)" value={{this.energia}} />
-            <br><label>Hiilihydraatit (g): </label>
-            <input type="number" name="carbs" placeholder="hiilihydraatit" value={{this.hiilihydraatti}} />
-            <br><label>Sokerit (g): </label>
-            <input type="number" name="sugar" placeholder="sokeria" value={{this.sokerit}} />
-            <br><label>Rasva (g): </label>
-            <input type="number" name="fat" placeholder="rasvaa" value={{this.rasva}} />
-            <br><label>Suola (mg): </label>
-            <input type="number" name="salt" placeholder="suolaa" value={{this.suola}} />
-            <br><label>Proteiini (g): </label>
-            <input type="number" name="prot" placeholder="proteiinia" value={{this.proteiini}} />
-            <br><label>Kuitu (g): </label>
-            <input type="number" name="fiber" placeholder="kuitua" value={{this.kuitu}} />
+            <input class="title" type="text" name="manufacturer" value={{this.valmistaja}} data-toggle='tooltip' title='Valmistaja' />
+            <input type="number" name="barcode" placeholder="viivakoodi" value={{this.viivakoodi}} data-toggle='tooltip' title='Viivakoodi' />
+            <input type="text" name="name" placeholder="nimi" value={{this.name}} data-toggle='tooltip' title='Nimi' required />
+            <input type="number" name="energy" placeholder="energiaa (kcal)" value={{this.energia}} data-toggle='tooltip' title='energiaa (kcal)' />
+            <input type="number" name="carbs" placeholder="hiilihydraatit (g)" value={{this.hiilihydraatti}} data-toggle='tooltip' title='hiilihydraatit (g)' />
+            <input type="number" name="sugar" placeholder="sokeria (g)" value={{this.sokerit}} data-toggle='tooltip' title='sokeria (g)' />
+            <input type="number" name="fat" placeholder="rasvaa (g)" value={{this.rasva}} data-toggle='tooltip' title='rasvaa (g)' />
+            <input type="number" name="salt" placeholder="suolaa (mg)" value={{this.suola}} data-toggle='tooltip' title='suolaa (mg)' />
+            <input type="number" name="prot" placeholder="proteiinia (g)" value={{this.proteiini}} data-toggle='tooltip' title='proteiinia (g)' />
+            <input type="number" name="fiber" placeholder="kuitua (g)" value={{this.kuitu}} data-toggle='tooltip' title='kuitua (g)' />
             <select name="category">
                 {{storeCat this.kategoria}}
-                {{storeImageId this.image_id}}
                 <option value={{this.kategoria}}></option>
                 {{#with distinct_categories}}
                     {{#if ready}}
@@ -45,9 +34,11 @@
                     {{/if}}
                 {{/with}}
             </select>
-
             <input type="file" name="image" id="file" class="myFileInput2" accept="image/*">
-            <label for="file"><span>lataa kuva</span></label>
+            <label for="file"><span>{{image_name}}</span></label>
+            {{#if remove_image_checkbox}}
+                <input type='checkbox' name='removeImage' unchecked/>poista kuva<br />
+            {{/if}}
             <input class="submit" type="submit" value="Talleta" />
 
         </form>
