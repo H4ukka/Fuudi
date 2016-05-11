@@ -1,0 +1,98 @@
+.editform-wrap {
+	padding: 120px 0;
+}
+.editform {
+	width: 300px;
+	margin: 0 auto;
+	padding: 20px;
+	background: #fefefe;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	text-align: center;
+}
+.editform > .edit-food-body > select {
+	/*-webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;*/
+}
+.editform > .food-edit-body > input,
+.editform > .food-edit-body > select {
+	width: 100%;
+	font-size: 1em;
+	font-weight: 300;
+	font-family: 'Source Sans Pro', sans-serif;
+	margin-top: 20px;
+	padding: 5px 0;
+	border: none;
+	background: #f2f2f2;
+	box-sizing: border-box;
+	padding: 10px;
+}
+.editform > .food-edit-body >input[type="file"] {
+	width: 0;
+}
+.editform > .food-edit-body > input.title {
+
+}
+.editform > .food-edit-body > input.submit {
+	text-transform: uppercase;
+	width: 200px;
+	padding: 0.625rem 1.25rem;
+	cursor: pointer;
+	background: #0DBB4E;
+	color: #eee;
+	transition: background 0.2s, color 0.2s;
+	border-radius: 2px;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 2px rgba(0,0,0,.2);
+	transition: all .2s ease-in-out;
+}
+.editform > .food-edit-body > input.submit:hover {
+	background: #10d558;
+	color: #eee;
+}
+.editform > .food-edit-body > input:focus, 
+.editform > .food-edit-body > input:active,
+.editform > .food-edit-body > select:focus,
+.editform > .food-edit-body > select:active {
+    outline:none; 
+}
+.error {
+	background: #C70039;
+	color: #eee;
+	padding: 2px 5px;
+	float: left;
+}
+.myFileInput2 {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.myFileInput2 + label {
+	line-height: normal;
+	text-transform: uppercase;
+    font-size: 1em;
+    font-weight: 300;
+    color: #eee;
+    background: #0DBB4E;
+    display: block;
+    width: 200px;
+    margin: 20px auto 0 auto;
+    padding: 0.625rem 1.25rem;
+	transition: background 0.2s, color 0.2s;
+	border-radius: 2px;
+	box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 2px rgba(0,0,0,.2);
+	transition: all .2s ease-in-out;
+	box-sizing: border-box;
+	 text-overflow:    ellipsis;
+	 overflow: hidden;  
+}
+.myFileInput2:focus + label,
+.myFileInput2 + label:hover {
+    background: #10d558;
+    color: #eee;
+}
+.myFileInput2 + label {
+	cursor: pointer;
+}
