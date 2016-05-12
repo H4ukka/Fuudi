@@ -20,7 +20,7 @@
             <input type="number" name="carbs" placeholder="hiilihydraatit (g)" value={{this.hiilihydraatti}} data-toggle='tooltip' title='hiilihydraatit (g)' />
             <input type="number" name="sugar" placeholder="sokeria (g)" value={{this.sokerit}} data-toggle='tooltip' title='sokeria (g)' />
             <input type="number" name="fat" placeholder="rasvaa (g)" value={{this.rasva}} data-toggle='tooltip' title='rasvaa (g)' />
-            <input type="number" name="salt" placeholder="suolaa (mg)" value={{this.suola}} data-toggle='tooltip' title='suolaa (mg)' />
+            <input type="number" name="salt" placeholder="suolaa (g)" value={{this.suola}} data-toggle='tooltip' title='suolaa (g)' />
             <input type="number" name="prot" placeholder="proteiinia (g)" value={{this.proteiini}} data-toggle='tooltip' title='proteiinia (g)' />
             <input type="number" name="fiber" placeholder="kuitua (g)" value={{this.kuitu}} data-toggle='tooltip' title='kuitua (g)' />
             <select name="category">
@@ -37,11 +37,14 @@
             <input type="file" name="image" id="file" class="myFileInput2" accept="image/*">
             <label for="file"><span>{{image_name}}</span></label>
             {{#if remove_image_checkbox}}
-                <input type='checkbox' name='removeImage' unchecked/>poista kuva<br />
+                <div class='remImageCB'>
+                    <input type='checkbox' id='CBremImg' name='removeImage' unchecked />
+                    <label for='CBremImg'><span>poista kuva</span></label>
+                </div> 
             {{/if}}
-            <input class="submit" type="submit" value="Talleta" />
+                <input class="submit" type="submit" value="Talleta" />
 
-        </form>
+</form>
       {{/with}}
     </div>
 </template>
