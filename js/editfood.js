@@ -12,13 +12,14 @@ if (Meteor.isClient) {
             // Get values from form element
             const target = event.target;
             const Name = target.name.value;
-            const energy = target.energy.value;
-            const carbs = target.carbs.value;
-            const sugar = target.sugar.value;
-            const fat = target.fat.value;
-            const salt = target.salt.value;
-            const prot = target.prot.value;
-            const fiber = target.fiber.value;
+            var energy, carbs, sugar, fat, salt, prot, fiber;
+            (target.energy.value !=='') ?  energy = parseFloat(target.energy.value) :  energy = target.energy.value;
+            (target.carbs.value !=='') ?  carbs = parseFloat(target.carbs.value) :  carbs = target.carbs.value;
+            (target.sugar.value !=='') ?  sugar = parseFloat(target.sugar.value) :  sugar = target.sugar.value;
+            (target.fat.value !=='') ?  fat = parseFloat(target.fat.value) :  fat = target.fat.value;
+            (target.salt.value !=='') ?  salt = parseFloat(target.salt.value) :  salt = target.salt.value;
+            (target.prot.value !=='') ?  prot = parseFloat(target.prot.value) :  prot = target.prot.value;
+            (target.fiber.value !=='') ?  fiber = parseFloat(target.fiber.value) :  fiber = target.fiber.value;
             const category = target.category.value;
             const manufacturer = target.manufacturer.value;
             const barcode = target.barcode.value;
@@ -39,8 +40,8 @@ if (Meteor.isClient) {
                     && (foundFoodManuf[i].toLowerCase() === manufacturer.toLowerCase())
                     && JSON.stringify(foundFoodId[i]) !== JSON.stringify(theDoc._id) ) { // cmdline inserted have _id: Object{_str: ""}
                     nameAndM_match = true;
-                    if(manufacturer !== '') var msg = foundFoodName[i] + " löytyy jo tietokannasta valmistajalta " + foundFoodManuf[i];
-                    else var msg = Name + " löytyy jo tietokannasta";
+                    if(manufacturer !== '') var msg = foundFoodName[i] + " lÃ¶ytyy jo tietokannasta valmistajalta " + foundFoodManuf[i];
+                    else var msg = Name + " lÃ¶ytyy jo tietokannasta";
                     alert(msg);
                     return false; 
                 }
@@ -55,7 +56,7 @@ if (Meteor.isClient) {
             var barcodeMatch = false;
             for (var i in foundBarcode) {
                 if (foundBarcode[i] === barcode && foundBarcode[i] !=='' && foundFoodId2[i] !== theDoc._id) {
-                    alert("Tuote samalla viivakoodilla löytyy jo tietokannasta!");
+                    alert("Tuote samalla viivakoodilla lÃ¶ytyy jo tietokannasta!");
                     barcodeMatch = true;
                     return false;
                 }
@@ -71,7 +72,7 @@ if (Meteor.isClient) {
                         Images.remove(theDoc.image_id);  // file_id default value is 0
                     }
                     //console.log("no image, file_id: "); console.log(file_id);
-                    Meteor.call('fuuditest.update', Name, energy, carbs,
+                    Meteor.call('fuuditest.update', theDoc._id, Name, energy, carbs,
                             sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                 }
                 else {
@@ -81,7 +82,7 @@ if (Meteor.isClient) {
                             console.log(err);
                         } else {
                             file_id = fileObj._id;
-                            Meteor.call('fuuditest.update', Name, energy, carbs,
+                            Meteor.call('fuuditest.update', theDoc._id, Name, energy, carbs,
                                         sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                             //console.log("theDoc.image_id"); console.log(theDoc.image_id);
                             if(theDoc.image_id !== undefined && theDoc.image_id !== 0) {
@@ -198,6 +199,19 @@ Template.registerHelper('remove_image_checkbox', function() { // generate code i
 Template.registerHelper('store_doc_id', function(id) { // search result different than picking from category
     var doc = Foods.find({_id: id}).fetch();
     Session.set('theDoc', doc[0]);
+});
+Template.registerHelper('display_salt', function(salt) { // convert salt content to a meaningful figure
+    var Salt;
+    if(salt < 0.01) {
+        Salt = '< 0.01';
+    }
+    else if(salt > 0.01 && salt < 1) {
+        Salt = parseFloat(salt.toFixed(2));
+    }
+    else if(salt >= 1) {
+        Salt = parseFloat(salt.toFixed(1));
+    }
+    return Salt;
 });
 /*----------------------------------------------------------------------------------------------------*/
 } /* Meteor.isClient */

@@ -49,6 +49,10 @@
 	background: #10d558;
 	color: #eee;
 }
+.editform > .food-edit-body > .remImageCB {
+    display: inline-block;
+    margin: 10px 0px 0 0
+}
 .editform > .food-edit-body > input:focus, 
 .editform > .food-edit-body > input:active,
 .editform > .food-edit-body > select:focus,

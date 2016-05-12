@@ -60,14 +60,14 @@ Meteor.methods({
         agent: user_agent
     });
 },
-  'fuuditest.update'(Name, energy, carbs,
+  'fuuditest.update'(id, Name, energy, carbs,
 		sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode) { 
 	    console.log("fuuditest.update");
 //	    console.log(manufacturer); console.log(barcode);
 //	     console.log(energy); console.log(carbs); console.log(sugar);
 //	    console.log(fat); console.log(salt); console.log(prot); console.log(fiber);
 //	    console.log(category); 
-	    Foods.update( {name: Name, kategoria: category}, { $set: {
+	    Foods.update( {_id: id}, { $set: {
 	        name: Name,
 	        kategoria: category,
 	        energia: energy,
@@ -141,16 +141,22 @@ if (Meteor.isClient) {
             // Get values from form element
             const target = event.target;
             const Name = target.name.value;
-            const energy = target.energy.value;
-            const carbs = target.carbs.value;
-            const sugar = target.sugar.value;
-            const fat = target.fat.value;
-            const salt = target.salt.value;
-            const prot = target.prot.value;
-            const fiber = target.fiber.value;
-            const category = target.category.value; 
+            var energy, carbs, sugar, fat, salt, prot, fiber;
+            (target.energy.value !=='') ?  energy = parseFloat(target.energy.value) :  energy = target.energy.value;
+            (target.carbs.value !=='') ?  carbs = parseFloat(target.carbs.value) :  carbs = target.carbs.value;
+            (target.sugar.value !=='') ?  sugar = parseFloat(target.sugar.value) :  sugar = target.sugar.value;
+            (target.fat.value !=='') ?  fat = parseFloat(target.fat.value) :  fat = target.fat.value;
+            (target.salt.value !=='') ?  salt = parseFloat(target.salt.value) :  salt = target.salt.value;
+            (target.prot.value !=='') ?  prot = parseFloat(target.prot.value) :  prot = target.prot.value;
+            (target.fiber.value !=='') ?  fiber = parseFloat(target.fiber.value) :  fiber = target.fiber.value;
+            const category = target.category.value;
             const manufacturer = target.manufacturer.value;
             const barcode = target.barcode.value;
+            console.log(category);
+            if(category === '' || category === undefined) { // dialog used instead of required tag
+                alert("Valitse kategoria");                 // because it turned text color the same 
+                return false;                               // as background
+            }
 // Does an item with same name and manufacturer already exist in mongoDB?
             var foodExists = Foods.find({name: {$regex: "^" + Name + "$", $options: "i"}, 
                 valmistaja:{$regex: "^" + manufacturer + "$", $options: "i"}},  
@@ -240,7 +246,8 @@ if (Meteor.isClient) {
 
         $('.food-form-body').validate({
             messages: {
-                name: 'Required'
+                name: 'Required',
+                category: 'Please select a category'
             }
         });
 
