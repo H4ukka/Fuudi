@@ -11,7 +11,11 @@ Router.route('/foods/:_category', function () {
 
     if (category === "add") {
         this.render('addfood');
-    }else{
+    }
+    else if (category === "edit") {
+        //console.log("edit food");
+        this.render('editfood');
+    } else {
         this.render('foods', {
             data: {
                 fooditem: function() {
