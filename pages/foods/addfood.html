@@ -21,11 +21,11 @@
 			<input type="number" name="carbs" placeholder="hiilihydraatit (g)" />
 			<input type="number" name="sugar" placeholder="sokeria (g)" />
 			<input type="number" name="fat" placeholder="rasvaa (g)" />
-			<input type="number" name="salt" placeholder="suolaa (mg)" />
+			<input type="number" name="salt" placeholder="suolaa (g)" />
 			<input type="number" name="prot" placeholder="proteiinia (g)" />
 			<input type="number" name="fiber" placeholder="kuitua (g)" />
             <select name="category">
-				<option value="none">valitse kategoria</option>
+				<option value=''>valitse kategoria</option>
 				{{#with distinct_categories}}
 		    	{{#if ready}}
 				    {{#each categories}}
