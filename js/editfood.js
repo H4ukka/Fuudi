@@ -11,7 +11,7 @@ if (Meteor.isClient) {
             //console.log("editform submit");
             // Get values from form element
             const target = event.target;
-            const Name = target.name.value;
+            const name = target.name.value;
             var energy, carbs, sugar, fat, salt, prot, fiber;
             (target.energy.value !=='') ?  energy = parseFloat(target.energy.value) :  energy = target.energy.value;
             (target.carbs.value !=='') ?  carbs = parseFloat(target.carbs.value) :  carbs = target.carbs.value;
@@ -27,28 +27,28 @@ if (Meteor.isClient) {
             var theDoc = Session.get('theDoc');
 
 // Does an item with same name and manufacturer already exist in mongoDB that's NOT the item being edited?
-            var foodExists = Foods.find({name: {$regex: "^" + Name + "$", $options: "i"}, 
+            var foodExists = Foods.find({nimi: {$regex: "^" + name + "$", $options: "i"}, 
                 valmistaja:{$regex: "^" + manufacturer + "$", $options: "i"}},  
-                { _id:1, name: 1, viivakoodi: 1, valmistaja:1} );
-            foundFoodName = foodExists.map( function(x) {return x.name;}); // console.log(foundFoodName);
+                { _id:1, nimi: 1, viivakoodi: 1, valmistaja:1} );
+            foundFoodName = foodExists.map( function(x) {return x.nimi;}); // console.log(foundFoodName);
             foundFoodManuf = foodExists.map( function(x) {return x.valmistaja;}); // console.log(foundFoodManuf);
             foundFoodId = foodExists.map( function(x) {return x._id;}); // console.log(foundFoodId);
 // name, manufacturer, & id, should only have 1 hit, but let's double check
             var nameAndM_match = false;
             for (var i in foundFoodName, foundFoodManuf) {
-                if ( (foundFoodName[i].toLowerCase() === Name.toLowerCase() ) 
+                if ( (foundFoodName[i].toLowerCase() === name.toLowerCase() ) 
                     && (foundFoodManuf[i].toLowerCase() === manufacturer.toLowerCase())
                     && JSON.stringify(foundFoodId[i]) !== JSON.stringify(theDoc._id) ) { // cmdline inserted have _id: Object{_str: ""}
                     nameAndM_match = true;
                     if(manufacturer !== '') var msg = foundFoodName[i] + " löytyy jo tietokannasta valmistajalta " + foundFoodManuf[i];
-                    else var msg = Name + " löytyy jo tietokannasta";
+                    else var msg = foundFoodName[i] + " löytyy jo tietokannasta";
                     alert(msg);
                     return false; 
                 }
             }
             // barcode, ignore name and manufacturer, but include  them in the result
             var barcodeExists = Foods.find({viivakoodi: barcode},  {
-                _id:1, name: 1, viivakoodi: 1, valmistaja:1} );
+                _id:1, nimi: 1, viivakoodi: 1, valmistaja:1} );
             foundBarcode = barcodeExists.map( function(x) {return x.viivakoodi;});
             foundFoodId2 = barcodeExists.map( function(x) {return x._id;});
             //            console.log(foundBarcode);
@@ -72,7 +72,7 @@ if (Meteor.isClient) {
                         Images.remove(theDoc.image_id);  // file_id default value is 0
                     }
                     //console.log("no image, file_id: "); console.log(file_id);
-                    Meteor.call('fuuditest.update', theDoc._id, Name, energy, carbs,
+                    Meteor.call('fuuditest.update', theDoc._id, name, energy, carbs,
                             sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                 }
                 else {
@@ -82,7 +82,7 @@ if (Meteor.isClient) {
                             console.log(err);
                         } else {
                             file_id = fileObj._id;
-                            Meteor.call('fuuditest.update', theDoc._id, Name, energy, carbs,
+                            Meteor.call('fuuditest.update', theDoc._id, name, energy, carbs,
                                         sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                             //console.log("theDoc.image_id"); console.log(theDoc.image_id);
                             if(theDoc.image_id !== undefined && theDoc.image_id !== 0) {
