@@ -20,7 +20,7 @@ Router.route('/foods/:_category', function () {
             data: {
                 fooditem: function() {
                     Meteor.subscribe('fuuditest');
-                    return Foods.find({kategoria: category }, {sort: {name: 1}});
+                    return Foods.find({kategoria: category }, {sort: {nimi: 1}});
                 }
             }
         });
@@ -65,13 +65,13 @@ Router.route('/categories/:_category', function () {
     });
 });
 
-Router.route('/food/:_name', function () {
-    var name = this.params._name;
+Router.route('/food/:_nimi', function () {
+    var name = this.params._nimi; //name
     this.render('food', {
         data: {
             fooditem: function(){ 
                 Meteor.subscribe('fuuditest');
-                return Foods.findOne({name: name}) 
+                return Foods.findOne({nimi: name}) 
             },
             // image: function(){ 
             //     var i_id = Foods.findOne({name: name}).image_id;
