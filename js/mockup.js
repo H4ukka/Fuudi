@@ -22,7 +22,7 @@ Images = new FS.Collection("images", {
 
 PlayersIndex = new EasySearch.Index({
     collection: Foods,
-    fields: ['name', 'kategoria'],
+    fields: ['name', 'kategoria', 'nimi'],
     engine: new EasySearch.MongoDB(),
     defaultSearchOptions: {
         limit: 20
@@ -30,14 +30,14 @@ PlayersIndex = new EasySearch.Index({
 });
 
 Meteor.methods({
-    'fuuditest.insert'(Name, energy, carbs,
+    'fuuditest.insert'(name, energy, carbs,
 		sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode) {
 		// Make sure the user is logged in before inserting a task
     	if (! Meteor.userId()) {
     	    throw new Meteor.Error('not-authorized');
     	}
         Foods.insert({
-            name: Name,
+            nimi: name,
             kategoria: category,
             energia: energy,
             hiilihydraatti: carbs,
@@ -60,15 +60,10 @@ Meteor.methods({
         agent: user_agent
     });
 },
-  'fuuditest.update'(id, Name, energy, carbs,
+  'fuuditest.update'(id, name, energy, carbs,
 		sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode) { 
-	    console.log("fuuditest.update");
-//	    console.log(manufacturer); console.log(barcode);
-//	     console.log(energy); console.log(carbs); console.log(sugar);
-//	    console.log(fat); console.log(salt); console.log(prot); console.log(fiber);
-//	    console.log(category); 
 	    Foods.update( {_id: id}, { $set: {
-	        name: Name,
+	        nimi: name,
 	        kategoria: category,
 	        energia: energy,
 	        hiilihydraatti: carbs,
@@ -140,7 +135,7 @@ if (Meteor.isClient) {
             //console.log("submit form");
             // Get values from form element
             const target = event.target;
-            const Name = target.name.value;
+            const name = target.name.value;
             var energy, carbs, sugar, fat, salt, prot, fiber;
             (target.energy.value !=='') ?  energy = parseFloat(target.energy.value) :  energy = target.energy.value;
             (target.carbs.value !=='') ?  carbs = parseFloat(target.carbs.value) :  carbs = target.carbs.value;
@@ -152,33 +147,32 @@ if (Meteor.isClient) {
             const category = target.category.value;
             const manufacturer = target.manufacturer.value;
             const barcode = target.barcode.value;
-            console.log(category);
             if(category === '' || category === undefined) { // dialog used instead of required tag
                 alert("Valitse kategoria");                 // because it turned text color the same 
                 return false;                               // as background
             }
 // Does an item with same name and manufacturer already exist in mongoDB?
-            var foodExists = Foods.find({name: {$regex: "^" + Name + "$", $options: "i"}, 
+            var foodExists = Foods.find({nimi: {$regex: "^" + name + "$", $options: "i"}, 
                 valmistaja:{$regex: "^" + manufacturer + "$", $options: "i"}},  
-                { name: 1, viivakoodi: 1, valmistaja:1} );
-            foundFoodName = foodExists.map( function(x) {return x.name;}); // console.log(foundFoodName);
+                { nimi: 1, viivakoodi: 1, valmistaja:1} );
+            foundFoodName = foodExists.map( function(x) {return x.nimi;}); // console.log(foundFoodName);
             foundFoodManuf = foodExists.map( function(x) {return x.valmistaja;}); // console.log(foundFoodManuf);
 // name && manufacturer, mongoDB regex search should be enough but let's double check
             var nameAndM_match = false;
             for (var i in foundFoodName, foundFoodManuf) {
-                if (foundFoodName[i].toLowerCase() === Name.toLowerCase() 
+                if (foundFoodName[i].toLowerCase() === name.toLowerCase() 
                     && foundFoodManuf[i].toLowerCase() === manufacturer.toLowerCase() ) { // works if manuf empty OR manuf field doesn't exist in DB
                     nameAndM_match = true;
 //                    console.log("both name && manufacturer");
                     if(manufacturer !== '') var msg = foundFoodName[i] + " löytyy jo tietokannasta valmistajalta " + foundFoodManuf[i];
-                    else var msg = Name + " löytyy jo tietokannasta";
+                    else var msg = foundFoodName[i] + " löytyy jo tietokannasta";
                     alert(msg);
                     return false; 
                 }
             }
 // barcode, ignore name and manufacturer, but include  them in the result
             var barcodeExists = Foods.find({viivakoodi: barcode},  {
-                name: 1, viivakoodi: 1, valmistaja:1} );
+                nimi: 1, viivakoodi: 1, valmistaja:1} );
             foundBarcode = barcodeExists.map( function(x) {return x.viivakoodi;});
 //            console.log(foundBarcode);
 
@@ -193,7 +187,7 @@ if (Meteor.isClient) {
 // neither barcode nor name & manufacturer found: OK to add
             if (barcodeMatch === false && nameAndM_match === false) {
                 if(target.image.files[0] === undefined) {
-                    Meteor.call('fuuditest.insert', Name, energy, carbs, 
+                    Meteor.call('fuuditest.insert', name, energy, carbs, 
                         sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                 }
                 else {
@@ -204,7 +198,7 @@ if (Meteor.isClient) {
                         } else {
                             // handle success depending what you need to do
                             file_id = fileObj._id;
-                            Meteor.call('fuuditest.insert', Name, energy, carbs, 
+                            Meteor.call('fuuditest.insert', name, energy, carbs, 
                                     sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode);
                         }
                     });
