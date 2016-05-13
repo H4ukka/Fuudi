@@ -40,7 +40,7 @@
     <div class="food-item preview-image">
         <a href="#">
             <img src="{{getImageFromId this.image_id}}" onerror="this.src='/svg/food-icons/cutlery-1.svg'" class="preview-img">
-            <h2><span>{{this.name}}</span></h2>
+            <h2><span>{{this.nimi}}</span></h2>
             {{ > foodinfo }}
         </a>
     </div>
@@ -50,7 +50,7 @@
     <div class="food-item no-preview-image">
         <a href="#">
             <img src='/svg/food-icons/cutlery-1.svg' class="preview-img">
-            <h2>{{this.name}}</h2>
+            <h2>{{this.nimi}}</h2>
             {{ > foodinfo }}
         </a>
     </div>
