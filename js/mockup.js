@@ -34,8 +34,10 @@ Meteor.methods({
 		sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode) {
 		// Make sure the user is logged in before inserting a task
     	if (! Meteor.userId()) {
-    	    throw new Meteor.Error('not-authorized');
-    	}
+            //throw new Meteor.Error('not-authorized');
+            alert("Onnistuu vain kirjautuneena."); 
+            return false;
+        }
         Foods.insert({
             nimi: name,
             kategoria: category,
@@ -62,7 +64,8 @@ Meteor.methods({
 },
   'fuuditest.update'(id, name, energy, carbs,
 		sugar, fat, salt, prot, fiber, file_id, category, manufacturer, barcode) { 
-	    Foods.update( {_id: id}, { $set: {
+
+		    Foods.update( {_id: id}, { $set: {
 	        nimi: name,
 	        kategoria: category,
 	        energia: energy,
@@ -377,10 +380,16 @@ if (Meteor.isServer) {
     Foods.allow({
         insert: function (userId, doc) {
             // the user must be logged in, and the document must be owned by the user
+            console.log("allow insert");
+            console.log(doc.owner);
+            console.log(userId);
             return (userId && doc.owner === userId);
         },
         update: function (userId, doc, fields, modifier) {
             // can only change your own documents
+            console.log("allow update");
+            console.log(doc.owner);
+            console.log(userId);
             return doc.owner === userId;
         },
         remove: function (userId, doc) {
