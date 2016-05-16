@@ -1,11 +1,14 @@
-// code copied from foodform to avoid tinkering with addfood.html
+// base code copied from foodform to avoid tinkering with addfood.html
 
 if (Meteor.isClient) {
     Template.editform.events({
         'submit form': function (event, template) {
             // Prevent default browser form submit
             event.preventDefault();
-
+            if (! Meteor.userId()) {
+                alert("Onnistuu vain kirjautuneena."); 
+                return false;
+            }
             var file_id = 0;
 
             //console.log("editform submit");
@@ -25,8 +28,16 @@ if (Meteor.isClient) {
             const barcode = target.barcode.value;
             var removeImage = Session.get('fileRemoveCB'); // true / false
             var theDoc = Session.get('theDoc');
-
-// Does an item with same name and manufacturer already exist in mongoDB that's NOT the item being edited?
+            console.log("ID check");
+            console.log(theDoc.owner);
+            console.log(Meteor.userId());
+            if(Meteor.userId() !== theDoc.owner && (theDoc.owner !== undefined)) {
+                alert("Vain omien editointi mahdollista."); // initil fineli item's don't have owner
+                return false;
+            }
+            
+            
+            // Does an item with same name and manufacturer already exist in mongoDB that's NOT the item being edited?
             var foodExists = Foods.find({nimi: {$regex: "^" + name + "$", $options: "i"}, 
                 valmistaja:{$regex: "^" + manufacturer + "$", $options: "i"}},  
                 { _id:1, nimi: 1, viivakoodi: 1, valmistaja:1} );
