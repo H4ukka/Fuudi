@@ -12,22 +12,46 @@
 
 <template name="fooditem">
 	{{#each fooditem}}
-	<div class="food-item no-preview-image">
-		<a href="#">
-			<img src="{{getImageFromId this.image_id}}" onerror="this.src='/svg/food-icons/cutlery-1.svg'" class="preview-img">
-			<h2>{{this.name}}</h2>
-			<div class="food-info">
-				<p>Enegiaa: <span>{{calories this.energia}} kcal</span></p>
-				<p>Hiilihydraatit: <span>{{this.hiilihydraatti}} g</span></p>
-				<p>Sokeria: <span>{{this.sokerit}} g</span></p>
-				<p>Rasvaa: <span>{{this.rasva}} g</span></p>
-				<p>Suolaa: <span>{{this.suola}} mg</span></p>
-				<p>Proteiinia: <span>{{this.proteiini}} g</span></p>
-				<p>Kuitua: <span>{{this.kuitu}} g</span></p>
-				<p class="quantifier">per 100g</p>
-				<div class="arrow-down"></div>
-			</div>
-		</a>
-	</div>
+      {{#if this.image_id}}
+          {{ > foodwithimage}}
+      {{else}}
+        {{ > foodwithoutimage}}
+      {{/if}}
 	{{/each}}
+</template>
+
+<template name="foodinfo">
+    <div class="food-info">
+        <p>Valmistaja: <span id="valmistaja">{{this.valmistaja}}</span></p>
+        <p>Energiaa: <span>{{this.energia}} kcal</span></p>
+        <p>Hiilihydraatit: <span>{{this.hiilihydraatti}} g</span></p>
+        <p>Sokeria: <span>{{this.sokerit}} g</span></p>
+        <p>Rasvaa: <span>{{this.rasva}} g</span></p>
+        <p>Suolaa: <span>{{display_salt this.suola}} g</span></p>
+        <p>Proteiinia: <span>{{this.proteiini}} g</span></p>
+        <p>Kuitua: <span>{{this.kuitu}} g</span></p>
+        <p class="quantifier">per 100g</p>
+        <p>Viivakoodi: <span id="viivakoodi">{{this.viivakoodi}}</span></p>
+        <div class="arrow-down"></div>
+    </div>
+</template>
+
+<template name="foodwithimage">
+    <div class="food-item preview-image">
+        <a href="#">
+            <img src="{{getImageFromId this.image_id}}" onerror="this.src='/svg/food-icons/cutlery-1.svg'" class="preview-img">
+            <h2><span>{{this.nimi}}</span></h2>
+            {{ > foodinfo }}
+        </a>
+    </div>
+</template>
+
+<template name="foodwithoutimage">
+    <div class="food-item no-preview-image">
+        <a href="#">
+            <img src='/svg/food-icons/cutlery-1.svg' class="preview-img">
+            <h2>{{this.nimi}}</h2>
+            {{ > foodinfo }}
+        </a>
+    </div>
 </template>

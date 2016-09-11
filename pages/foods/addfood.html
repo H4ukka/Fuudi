@@ -12,16 +12,20 @@
 <template name="foodform">
 	<div class="foodform">
 		<form class="food-form-body">
-			<input class="title" type="text" name="name" placeholder="nimi" required/>
-			<input type="number" name="energy" placeholder="energiaa" />
-			<input type="number" name="carbs" placeholder="hiilihydraatit" />
-			<input type="number" name="sugar" placeholder="sokeria" />
-			<input type="number" name="fat" placeholder="rasvaa" />
-			<input type="number" name="salt" placeholder="suolaa" />
-			<input type="number" name="prot" placeholder="proteiinia" />
-			<input type="number" name="fiber" placeholder="kuitua" />
-			<select name="category">
-				<option value="none">valitse kategoria</option>
+            <input class="title" type="text" name="manufacturer" placeholder="valmistaja" />
+            <input type="number" name="barcode" placeholder="viivakoodi" />
+            <input type="text" name="name" placeholder="nimi" required />
+<!--			<input class="title" type="text" name="name" placeholder="nimi" required/> 
+            <input type="text" name="manufacturer" placeholder="valmistaja" />-->
+			<input type="number" name="energy" placeholder="energiaa (kcal)" />
+			<input type="number" name="carbs" placeholder="hiilihydraatit (g)" />
+			<input type="number" name="sugar" placeholder="sokeria (g)" />
+			<input type="number" name="fat" placeholder="rasvaa (g)" />
+			<input type="number" name="salt" placeholder="suolaa (g)" />
+			<input type="number" name="prot" placeholder="proteiinia (g)" />
+			<input type="number" name="fiber" placeholder="kuitua (g)" />
+            <select name="category">
+				<option value=''>valitse kategoria</option>
 				{{#with distinct_categories}}
 		    	{{#if ready}}
 				    {{#each categories}}
